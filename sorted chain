@@ -1,0 +1,160 @@
+public class Pair<k extends Comparable<k>,v>
+{
+k key;
+v value;
+Pair(k key,v value)
+{
+this.key=key;
+this.value=value;
+}
+public String toString()
+{
+return "key:"+key+"value:"+value;
+}
+}
+
+public class PairNode<k extends Comparable<k>,v>
+{
+Pair<k,v> data;
+PairNode<k,v> next;
+PairNode(Pair<k,v> p,PairNode<k,v> next)
+{
+data=p;
+this.next=next;
+}
+}
+
+public class SortedChain<k extends Comparable<k>,v>
+{
+PairNode<k,v> head;
+int dsize;
+public boolean isEmpty()
+{
+return head==null;
+}
+public int size()
+{
+return dsize;
+}
+public void insert(Pair<k,v> p)
+{
+PairNode<k,v> np=new PairNode<k,v>(p,null);
+PairNode<k,v> temp;
+PairNode<k,v> prev;
+if(isEmpty())
+{
+head=np;
+}
+else if(p.key.compareTo(head.data.key)<0)
+{
+np.next=head;
+head=np;
+}
+else
+{
+temp=head;
+prev=null;
+while(temp!=null && p.key.compareTo(head.data.key)>0)
+{
+prev=temp;
+temp=temp.next;
+}
+np.next=prev.next;
+prev.next=np;
+}
+dsize++;
+}
+public void display()
+{
+PairNode<k,v> temp;
+if(isEmpty())
+{
+System.out.println("dictionary is empty");
+}
+else{
+temp=head;
+while(temp!=null)
+{
+System.out.println(temp.data);
+temp=temp.next;
+}
+}
+}
+public void delete(k key)
+{
+PairNode<k,v> temp=head;
+PairNode<k,v> prev=null;
+while(temp!=null && key.compareTo(head.data.key)>0)
+{
+prev=temp;
+temp=temp.next;
+}
+if(head==null)
+{
+System.out.println("dictionary is empty");
+return;
+}
+if(temp.data.key.equals(key))
+{
+System.out.println("deleted entry is"+temp.data);
+if(temp==head)
+{
+head=head.next;
+dsize--;
+}
+else if(temp.next==null)
+{
+prev.next=null;
+dsize--;
+}
+else
+{
+prev.next=temp.next;
+dsize--;
+}
+}
+else
+System.out.println("element is  not found");
+}
+}
+
+import java.util.*;
+public class ScTest
+{
+public static void main(String[] args)
+{
+int op;
+int rno;
+String name;
+Scanner sc=new Scanner(System.in);
+SortedChain<Integer,String> s=new SortedChain<>();
+Pair<Integer,String> p1;
+System.out.println("1.insert\n2.delete\n3.display");
+do
+{
+System.out.println("enter operation");
+op=sc.nextInt();
+switch(op)
+{
+case 1:
+System.out.println("key,value:");
+rno=sc.nextInt();
+name=sc.nextLine();
+p1=new Pair<Integer,String>(rno,name);
+s.insert(p1);
+break;
+
+case 2:
+System.out.println("enter the key:");
+rno=sc.nextInt();
+s.delete(rno);
+break;
+case 3:
+s.display();
+break;
+case 4:
+System.exit(0);
+}
+}while(op!=7);
+}
+}
