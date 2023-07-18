@@ -1,0 +1,111 @@
+import java.util.*;
+public class genqueue<T> {
+    private T[] queue;
+    private int size;
+    private int front=-1;
+    private int rear=-1;
+    public genqueue(int size,T[] queue)
+    {
+        this.size=size;
+        this.queue=queue;
+    }
+    public boolean isFull()
+    {
+        return(rear==size-1);
+
+    }
+    public boolean isEmpty()
+    {
+    return(front==-1 && rear==-1);
+
+    }
+    public void enqueue( T item)
+    {
+        if(isFull())
+   System.out.println("queue is full");
+        else{
+            if(front==-1)
+            front=0;
+            rear++;
+            queue[rear]=item;
+
+
+        }
+        
+    }
+    public void dequeue(T item)
+         {
+            if(isEmpty())
+            System.out.println("queue is empty");
+            else
+            {
+                if(front==rear)
+                {
+                    System.out.println(queue[front]);
+                    front=-1;
+                    rear=-1;
+                }
+                else{
+                item=queue[front];
+                front++;
+                System.out.println(item);
+               }
+                
+            }
+            
+            
+        }
+public void display()
+{
+    if(isEmpty())
+    {
+        System.out.println("queu is emoty");
+    }
+    else
+    {
+        for(int i=front;i<=rear;i++)
+        {
+            System.out.println(queue[i]);
+		}
+	}
+}
+}
+
+import java.util.*;
+
+
+public class QueuTest {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter the size of the queue");
+        
+        int n=sc.nextInt();
+        Integer[] arr=new Integer[n];
+        genqueue<Integer> s=new genqueue<>(n, arr);
+        int ch;
+        do
+        {
+            System.out.println("enter choice:");
+            ch=sc.nextInt();
+            switch(ch)
+            {
+                case 1:
+                System.out.println("enter the element:");
+                int x=sc.nextInt();
+                s.enqueue(x);
+                break;
+                case 2:
+                s.dequeue(null);
+				break;
+                case 3:
+                s.display();
+                break;
+                case 4:
+                System.exit(0);
+                default:
+                System.out.println("invalid");
+
+            }
+        }while(ch!=5);
+	}
+}
