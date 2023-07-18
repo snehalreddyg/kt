@@ -1,0 +1,148 @@
+public class keyValue<T extends Comparable<T>>
+ {
+   T key;
+   String name;
+   int age;
+   keyValue(T key,String name,int age)
+    {
+	  this.key=key;
+	  this.name=name;
+	  this.age=age;
+	 }
+	 public String toString()
+	 {
+		  return ("key:"+key+"name:"+name+"age:"+age);
+	 }
+	 }
+import java.util.*;
+public class Linear<T extends Comparable<T>>
+ {
+   private int currentsize;
+   int maxsize;
+   keyValue<T>[] keyvalue;
+   public Linear(int capacity)
+    {
+	  currentsize=0;
+	  maxsize=capacity;
+	  keyvalue=new keyValue[maxsize];
+	  for(int i=0;i<capacity;i++)
+	   keyvalue[i]=null;
+	 }
+	 public int hash(T key)
+	  {
+	   return key.hashCode()%maxsize;
+	  }
+	 public boolean insert(T key,String name,int age)
+	  {
+	    int i=hash(key);
+		keyValue<T> k=new keyValue<T>(key,name,age);
+		if(currentsize==maxsize)
+		  return false;
+		while(keyvalue[i]!=null)
+		     i=(i+1)%maxsize;
+		keyvalue[i]=k;
+		currentsize++;
+		return true;
+	}
+	public boolean delete(T key)
+	 {
+	   if(get(key)==null)
+	       return false;
+		else
+		 {
+	   int i=hash(key);
+	   int j;
+	   j=i;
+	   while(keyvalue[j]!=null)
+	    {
+	     if(keyvalue[j].key.compareTo(key)==0)
+		     keyvalue[j]=null;
+		     currentsize--;
+			 j=(j+1)%maxsize;
+		 if(j==i)
+			 break;
+		 }
+	 return true;
+	 }
+	 }
+	 public keyValue get(T key)
+	 {
+	   int i=hash(key);
+	   int j;
+	   j=i;
+	   while(keyvalue[j]!=null)
+	    {
+	     if(keyvalue[j].key.compareTo(key)==0)
+		      return keyvalue[j];
+		     currentsize--;
+			 j=(j+1)%maxsize;
+		 if(j==i)
+			 break;
+		   }
+	    
+	   return null;
+	 }
+	 public keyValue[] getList()
+	 {
+		  return keyvalue;
+	 }
+	 }
+import java.util.*;
+public class LinearTest
+ {
+   public static void main(String[] args)
+    {
+	  int ch;
+	  int key;
+	  String name;
+	  int age;
+	  Scanner sc=new Scanner(System.in);
+	  System.out.println("Enter size:");
+	  int n=sc.nextInt();
+	  Linear<Integer> l=new Linear<>(n);
+	  do
+	   {
+	    System.out.println("Enter choice:");
+		ch=sc.nextInt();
+		switch(ch)
+		 {
+		  case 1:
+		     sc.nextLine();
+		     System.out.println("Enter key:");
+			 key=Integer.parseInt(sc.nextLine());
+			 System.out.println("Enter name:");
+			 name=sc.nextLine();
+			 System.out.println("Enter age:");
+			 age=sc.nextInt();
+			 boolean b=l.insert(key,name,age);
+			 if(!b)
+			    System.out.println("hash full");
+			 break;
+		  case 2:
+		     System.out.println("Enter key");
+			 int c=sc.nextInt();
+			 boolean d=l.delete(c);
+			 if(!d)
+			   System.out.println("Empty");
+			  break;
+		case 3:
+			    System.out.println("enter key");
+				int k=sc.nextInt();
+				keyValue y=l.get(k);
+				System.out.println(y);
+				break;
+		case 4:
+		  keyValue<Integer>[] x=l.getList();
+		  for(int i=0;i<x.length;i++)
+		  { 
+	          if(x[i]!=null)
+			  {
+				   System.out.printf("%-11d%-15s%-14d%d\n",x[i].key,x[i].name,x[i].age,i);
+				   System.out.println();
+				}
+		  }
+		  break;
+		 }
+				}while(ch!=0);
+				}
+				}
