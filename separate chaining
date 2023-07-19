@@ -1,0 +1,57 @@
+import java.util.*;
+public class SeparateChaining<T>{
+private List<T>[] theLists;
+private int currentSize;
+public SeparateChaining(int size)
+ {
+theLists=new LinkedList[size];
+for(int i=0;i<theLists.length;i++)
+theLists[i]=new LinkedList<>();
+}
+public void insert(T element){
+List<T> whichList=theLists[myHash(element)];
+if(!whichList.contains(element))
+//does not allow duplication
+ {
+whichList.add(element);
+currentSize++;
+}
+ }
+ public void remove(T element){
+ List<T> whichList=theLists[myHash(element)];
+ if(whichList.contains(element)){
+ whichList.remove(element);
+ currentSize--;
+ }
+ }
+private int myHash(T element){
+int hashValue=element.hashCode();
+hashValue%=theLists.length;
+if(hashValue<0)
+hashValue+=theLists.length;
+ return hashValue;
+}
+public boolean contains(T element){
+List<T> whichList=theLists[myHash(element)];
+return whichList.contains(element);
+}
+public void makeEmpty(){
+for(int i=0;i<theLists.length;i++)
+theLists[i].clear();
+}
+public void showAll(){
+for(int i=0;i<theLists.length;i++)
+System.out.println("Chain "+i+": "+theLists[i]);
+}
+public static void main(String[] args){
+SeparateChaining<String> sc=new SeparateChaining<>(7);
+sc.insert("hello");
+sc.insert("world");
+sc.insert("java");
+sc.insert("programming");
+sc.insert("separate");
+sc.insert("chaining");
+System.out.println("Is java present? "+sc.contains("java"));
+sc.showAll();
+}
+ }
