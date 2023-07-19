@@ -1,0 +1,160 @@
+//5a.Queue using array list collection class
+import java.util.*;
+class QueueA<T>{
+ ArrayList<T> queue;
+ int front=-1,rear=-1;
+ public QueueA(){
+ queue=new ArrayList<>();
+ }
+ public void enqueue(T ele){
+ if(queue.isEmpty())
+ front=rear=0;
+ else
+ rear++;
+ queue.add(ele);
+ }
+ public T dequeue(){
+ if(isEmpty()){
+return null;
+ }
+ else{
+ return queue.remove(front);
+ }
+}
+ public void display(){
+ if(isEmpty())
+ System.out.println("{}");
+ else{
+for(int i=0;i<=queue.size()-1;i++){
+System.out.println(queue.get(i));
+}
+ }
+ }
+ public boolean search(T ele){
+ return queue.contains(T);
+}
+ public boolean isEmpty(){
+ return queue.isEmpty();
+ }
+}
+public class QueueAT{
+ public static void main(String[] args){
+ int ch=0;
+Scanner sc=new Scanner(System.in);
+QueueA<Integer> q=new QueueA<>();
+System.out.println("\n1.enqueue\n2.dequeue\n3.display\n4.search\nAny choice Exit");
+do{
+System.out.println("Enter the choice :");
+ch=sc.nextInt();
+switch(ch) {
+ case 1:
+ System.out.println("Enter the element:");
+ int a=sc.nextInt();
+ q.enqueue(a);
+ break;
+ case 2:
+ Integer e=q.dequeue();
+ if(e!=null)
+ System.out.println(e+" is deleted");
+ else
+ System.out.println("Queue is empty");
+ break;
+ case 3:
+ System.out.println("The queue is");
+ q.display();
+ break;
+ case 4:
+ System.out.println("Enter element to search :");
+ int ele=sc.nextInt();
+ if(q.search(ele))
+ System.out.println("element found");
+ else
+ System.out.println("element not found");
+ 
+ break;
+default:
+ System.out.println("Exit");
+ System.exit(0);
+ break;
+ }
+ }while(ch<5);
+ }
+}
+
+
+//5b.Queue using linked list collection class
+import java.util.*;
+public class QueueL<T>{
+ LinkedList<T> queue;
+ public QueueL() {
+ queue=new LinkedList<>();
+ }
+ public void enqueue(T ele) {
+ queue.add(ele);
+ }
+ public T dequeue(){
+ if(isEmpty()){
+ System.out.println("Queue is empty");
+ return null;
+ }
+ else
+ return queue.removeFirst();
+ }
+ public void display(){
+ if(isEmpty())
+ System.out.println("{}");
+ else{
+ Iterator x=queue.iterator();
+ while(x.hasNext())
+ System.out.println(x.next()+" ");
+ }
+ }
+ public boolean search(T ele){
+ return queue.contains(ele);
+}
+ public boolean isEmpty(){
+ return queue.isEmpty();
+ }
+}
+public class QueueLT{
+ public static void main(String[] args){
+ int ch=0;
+ Scanner sc=new Scanner(System.in);
+ QueueL<Integer> q=new QueueL<>();
+ System.out.println("\n1.enqueue\n2.dequeue\n3.display\n4.search\nAny choice Exit");
+ do{
+System.out.println("Enter the choice :");
+ch=sc.nextInt();
+switch(ch) {
+ case 1:
+ System.out.println("Enter the element:");
+ int a=sc.nextInt();
+ q.enqueue(a);
+ break;
+case 2:
+ Integer e=q.dequeue();
+ if(e!=null)
+ System.out.println(e+" is deleted");
+ else
+ System.out.println("Stack is empty");
+ break;
+case 3:
+ System.out.println("The queue is");
+ q.display();
+ break;
+ case 4:
+ System.out.println("Enter element to search :");
+ int ele=sc.nextInt();
+ if(q.search(ele))
+ System.out.println("element found");
+ else
+ System.out.println("element not found");
+ break;
+default:
+ System.out.println("Exit");
+ System.exit(0);
+ break;
+ }
+ }while(ch<5);
+ }
+}
