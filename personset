@@ -1,0 +1,66 @@
+//7.personset
+import java.util.*;
+class Person{
+private String name;
+private int age;
+private double income;
+public Person(String name, int age, double income) {
+ this.name = name;
+ this.age = age;
+ this.income = income;
+}
+public int getAge() {
+ return age;
+}
+public double getIncome(){
+ return income;
+}
+public String toString() {
+ return "Person [name=" + name + ", age=" + age + ", income=" + income + "]";
+}
+}
+public class PersonSet{
+public static void main(String[] args) {
+ Set<Person> setA = new HashSet<>();
+ Set<Person> setB = new HashSet<>();
+ Set<Person> setC = new HashSet<>();
+ Scanner scanner = new Scanner(System.in);
+ System.out.print("Enter the number of persons: ");
+ int numPersons = scanner.nextInt();
+ scanner.nextLine();
+ for (int i = 0; i < numPersons; i++){
+ System.out.println("Enter details for Person " + (i + 1) + ":");
+ System.out.print("Name: ");
+ String name = scanner.nextLine();
+ System.out.print("Age: ");
+ int age = scanner.nextInt();
+ System.out.print("Income: ");
+ double income = scanner.nextDouble();
+ scanner.nextLine(); 
+ Person person = new Person(name, age, income);
+ setA.add(person);
+ }
+ for (Person person : setA) {
+ if (person.getAge() > 60){
+ setB.add(person);
+ }
+ if (person.getIncome() < 10000) {
+ setC.add(person);
+ }
+ }
+ System.out.println("Set B (persons whose age > 60):");
+ printPersonSet(setB);
+ System.out.println("Set C (persons whose income < 10000):");
+printPersonSet(setC);
+ Set<Person> setBIntersectionC = new HashSet<>(setB);
+ setBIntersectionC.retainAll(setC);
+ System.out.println("Set B Intersection of Set C :");
+ printPersonSet(setBIntersectionC);
+}
+public static void printPersonSet(Set<Person> set) {
+ for (Person person : set){
+ System.out.println(person);
+ }
+ System.out.println();
+}
+}
